@@ -5,6 +5,8 @@ function configValidator(config: Record<string, unknown>): Record<string, unknow
     "GRPC_CA_CERT_PATH",
     "GRPC_SERVER_CERT_PATH",
     "GRPC_SERVER_KEY_PATH",
+    "LOG_LEVEL",
+    "PROFILE",
   ];
 
   for (const key of required) {
