@@ -1,0 +1,15 @@
+import "dotenv/config";
+import { DataSource } from "typeorm";
+import { baseDataSourceOptions } from "./data-source.base";
+
+const databaseUrl: string | undefined = process.env.PSQL_URI;
+if (!databaseUrl) {
+  throw new Error("PSQL_URI environment variable is not set.");
+}
+
+export const appDataSource = new DataSource({
+  ...baseDataSourceOptions,
+  url: databaseUrl,
+  logging: process.env.PROFILE === "development",
+  synchronize: false,
+});
