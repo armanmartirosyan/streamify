@@ -8,7 +8,7 @@ export class CreateUserstable1780046762496 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "int",
+            type: "bigint",
             isPrimary: true,
             isGenerated: true,
             generationStrategy: "increment",
@@ -34,14 +34,15 @@ export class CreateUserstable1780046762496 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: "stream_key",
+            name: "display_name",
             type: "varchar",
-            length: "255",
+            length: "30",
             isNullable: true,
           },
           {
-            name: "verified_at",
-            type: "timestamp",
+            name: "avatar_url",
+            type: "varchar",
+            length: "255",
             isNullable: true,
           },
           {
@@ -54,6 +55,11 @@ export class CreateUserstable1780046762496 implements MigrationInterface {
             type: "timestamp",
             default: "CURRENT_TIMESTAMP",
             onUpdate: "CURRENT_TIMESTAMP",
+          },
+          {
+            name: "verified_at",
+            type: "timestamp",
+            isNullable: true,
           },
         ],
       }),
