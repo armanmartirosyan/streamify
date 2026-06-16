@@ -32,6 +32,12 @@ export class CreateSessionsTable1781512909270 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
+                        name: "device_name",
+                        type: "varchar",
+                        length: "255",
+                        isNullable: true,
+                    },
+                    {
                         name: "last_ip",
                         type: "varchar",
                         length: "32",
