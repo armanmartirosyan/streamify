@@ -23,10 +23,14 @@ export class User {
   @Column({ name: "created_at", type: "timestamp", default: (): string => "CURRENT_TIMESTAMP" })
   createdAt!: Date;
 
-  @Column({ name: "updated_at", type: "timestamp", default: (): string => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
+  @Column({
+    name: "updated_at",
+    type: "timestamp",
+    default: (): string => "CURRENT_TIMESTAMP",
+    onUpdate: "CURRENT_TIMESTAMP",
+  })
   updatedAt!: Date;
 
   @Column({ name: "verified_at", type: "timestamp", nullable: true })
   verifiedAt?: Date;
-
 }
