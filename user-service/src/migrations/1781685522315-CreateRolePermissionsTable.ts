@@ -18,13 +18,7 @@ export class CreateRolePermissionsTable1781685522315 implements MigrationInterfa
                         isNullable: false,
                     },
                     {
-                        name: "description",
-                        type: "varchar",
-                        length: "255",
-                        isNullable: false,
-                    },
-                    {
-                        name: "created_at",
+                        name: "assigned_at",
                         type: "timestamp",
                         default: "CURRENT_TIMESTAMP",
                     },
@@ -35,11 +29,29 @@ export class CreateRolePermissionsTable1781685522315 implements MigrationInterfa
                         columnNames: ["role_id", "permission_id"],
                     },
                 ],
+                foreignKeys: [
+                    {
+                        name: 'FK_ROLE_PERMISSIONS_ROLE_ID_ROLES_ID',
+                        columnNames: ['role_id'],
+                        referencedTableName: 'roles',
+                        referencedColumnNames: ['id'],
+                        onDelete: 'CASCADE',
+                    },
+                    {
+                        name: 'FK_ROLE_PERMISSIONS_PERMISSION_ID_PERMISSIONS_ID',
+                        columnNames: ['permission_id'],
+                        referencedTableName: 'permissions',
+                        referencedColumnNames: ['id'],
+                        onDelete: 'CASCADE',
+                    }
+                ],
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropForeignKey("role_permissions", "FK_ROLE_PERMISSIONS_ROLE_ID_ROLES_ID");
+        await queryRunner.dropForeignKey("role_permissions", "FK_ROLE_PERMISSIONS_PERMISSION_ID_PERMISSIONS_ID");
         await queryRunner.dropTable("role_permissions");
     }
 

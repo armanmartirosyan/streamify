@@ -24,7 +24,7 @@ export class CreateRolesTable1781525049678 implements MigrationInterface {
                     {
                         name: "description",
                         type: "text",
-                        isNullable: true,
+                        isNullable: false,
                     },
                     {
                         name: "is_system",

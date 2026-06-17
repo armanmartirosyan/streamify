@@ -27,8 +27,7 @@ export class CreateSessionsTable1781512909270 implements MigrationInterface {
                     },
                     {
                         name: "device_id",
-                        type: "varchar",
-                        length: "255",
+                        type: "uuid",
                         isNullable: false,
                     },
                     {
@@ -40,7 +39,7 @@ export class CreateSessionsTable1781512909270 implements MigrationInterface {
                     {
                         name: "last_ip",
                         type: "varchar",
-                        length: "32",
+                        length: "255",
                         isNullable: true,
                     },
                     {
@@ -61,6 +60,7 @@ export class CreateSessionsTable1781512909270 implements MigrationInterface {
                 ],
                 foreignKeys: [
                     {
+                        name: 'FK_SESSIONS_USER_ID_USERS_ID',
                         columnNames: ["user_id"],
                         referencedTableName: "users",
                         referencedColumnNames: ["id"],
@@ -102,6 +102,7 @@ export class CreateSessionsTable1781512909270 implements MigrationInterface {
         await queryRunner.dropIndex("sessions", "UQ_SESSIONS_USER_ID_DEVICE_ID");
         await queryRunner.dropIndex("sessions", "IDX_SESSIONS_TOKEN_HASH");
         await queryRunner.dropIndex("sessions", "IDX_SESSIONS_ACTIVE_USER_ID");
+        await queryRunner.dropForeignKey("sessions", "FK_SESSIONS_USER_ID_USERS_ID");
         await queryRunner.dropTable("sessions");
     }
 }

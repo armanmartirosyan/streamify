@@ -20,7 +20,7 @@ export class CreateUserRolesTable1781600390991 implements MigrationInterface {
                     {
                         name: "assigned_by",
                         type: "bigint",
-                        isNullable: false,
+                        isNullable: true,
                     },
                     {
                         name: "assigned_at",
@@ -34,11 +34,37 @@ export class CreateUserRolesTable1781600390991 implements MigrationInterface {
                         columnNames: ["user_id", "role_id"],
                     },
                 ],
+                foreignKeys: [
+                    {
+                        name: 'FK_USER_ROLES_USER_ID_USERS_ID',
+                        columnNames: ['user_id'],
+                        referencedTableName: 'users',
+                        referencedColumnNames: ['id'],
+                        onDelete: 'CASCADE',
+                    },
+                    {
+                        name: 'FK_USER_ROLES_ROLE_ID_ROLES_ID',
+                        columnNames: ['role_id'],
+                        referencedTableName: 'roles',
+                        referencedColumnNames: ['id'],
+                        onDelete: 'CASCADE',
+                    },
+                    {
+                        name: 'FK_USER_ROLES_ASSIGNED_BY_USERS_ID',
+                        columnNames: ['assigned_by'],
+                        referencedTableName: 'users',
+                        referencedColumnNames: ['id'],
+                        onDelete: 'SET NULL',
+                    },
+                ],
             })
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropForeignKey("user_roles", "FK_USER_ROLES_USER_ID_USERS_ID");
+        await queryRunner.dropForeignKey("user_roles", "FK_USER_ROLES_ROLE_ID_ROLES_ID");
+        await queryRunner.dropForeignKey("user_roles", "FK_USER_ROLES_ASSIGNED_BY_USERS_ID");
         await queryRunner.dropTable("user_roles");
     }
 }

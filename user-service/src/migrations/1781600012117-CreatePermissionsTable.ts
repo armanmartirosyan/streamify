@@ -26,6 +26,11 @@ export class CreatePermissionsTable1781600012117 implements MigrationInterface {
                         type: "text",
                         isNullable: false,
                     },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "CURRENT_TIMESTAMP",
+                    },
                 ],
             }),
         );
