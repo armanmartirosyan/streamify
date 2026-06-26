@@ -3,26 +3,32 @@ syntax = "proto3";
 package user;
 
 service UserService {
-  rpc GetUser (GetUserRequest) returns (GetUserResponse);
   rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+}
+
+service AuthService {
+  rpc RegisterUser (CreateUserRequest) returns (CreateUserResponse);
 }
 
 message NoParam {}
 
-message GetUserRequest {
-  int32 id = 1;
-}
-
-message GetUserResponse {
-  int32  id   = 1;
-  string name = 2;
-}
-
 message CreateUserRequest {
-  string name = 1;
+  string          email             = 1;
+  string          username          = 2;
+  string          password          = 3;
+  string          confirmPassword   = 4;
+  optional string displayName       = 5;
 }
 
 message CreateUserResponse {
-  int32  id   = 1;
-  string name = 2;
+  int32           id                = 1;
+  string          email             = 2;
+  string          username          = 3;
+  optional string displayName       = 4;
+  Tokens          tokens            = 5;
+}
+
+message Tokens {
+  string accessToken  = 1;
+  string refreshToken = 2;
 }

@@ -2,11 +2,12 @@ import "dotenv/config";
 import fs from "node:fs";
 import { join } from "node:path";
 import * as grpc from "@grpc/grpc-js";
-import { INestMicroservice, Logger } from "@nestjs/common";
+import { INestMicroservice, Logger, ValidationError } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { Transport } from "@nestjs/microservices";
+import { RpcException, Transport } from "@nestjs/microservices";
 import { AppModule } from "./app.module";
+import { ProtoValidationPipe } from "./common/pipes/proto-validation/proto-validation.pipe";
 import type { ServerCredentials } from "@grpc/grpc-js";
 
 async function bootstrap(): Promise<void> {
@@ -54,6 +55,24 @@ async function bootstrap(): Promise<void> {
     },
     logger: logLevel.split(",") as ("verbose" | "debug" | "log" | "warn" | "error" | "fatal")[],
   });
+
+  app.useGlobalPipes(
+    new ProtoValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      exceptionFactory: (errors: ValidationError[]): RpcException => {
+        const errorMessages: string[] = errors.map(
+          (err: ValidationError): string => `${err.property} has wrong value (${Object.values(err.constraints || {}).join(", ")})`
+        );
+
+        return new RpcException({
+          code: grpc.status.INVALID_ARGUMENT,
+          message: JSON.stringify(errorMessages),
+        });
+      },
+    }),
+  );
   await app.listen();
   logger.log(`User service is listening on port ${port}`);
 }

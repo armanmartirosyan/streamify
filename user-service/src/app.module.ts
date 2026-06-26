@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AuthModule } from "./auth/auth.module";
 import { configValidator } from "./config/config.validator";
 import { appDataSource } from "./database/data-source.app";
 import { RedisModule } from "./redis/redis.module";
-import { UsersModule } from "./users/users.module";
 import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
 
 @Module({
@@ -21,7 +21,7 @@ import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
         retryStrategy: (times: number): number => Math.min(times * 100, 3000),
       }),
     }),
-    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
