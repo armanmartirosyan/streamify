@@ -1,3 +1,5 @@
+import type { User } from "@/users/entities/user.entity";
+
 export namespace AuthTypes {
   type RegisterUserRequest = {
     email: string;
@@ -8,13 +10,7 @@ export namespace AuthTypes {
     profilePictureUrl?: string;
   };
 
-  type RegisterUserResponse = {
-    id: number;
-    email: string;
-    username: string;
-    displayName?: string;
-    tokens: Tokens;
-  };
+  type RegisterUserResponse = User & Tokens;
 
   type Tokens = {
     accessToken: string;

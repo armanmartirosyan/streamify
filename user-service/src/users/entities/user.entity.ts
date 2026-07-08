@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "users" })
@@ -12,15 +13,17 @@ export class User {
   username!: string;
 
   @Column({ length: 255, nullable: false })
+  @Exclude()
   password!: string;
 
-  @Column({ name: "display_name", length: 30, nullable: true })
-  displayName?: string;
+  @Column({ name: "display_name", type: "varchar", length: 30, nullable: true })
+  displayName!: string | null;
 
-  @Column({ name: "avatar_url", length: 255, nullable: true })
-  avatarUrl?: string;
+  @Column({ name: "avatar_url", type: "varchar", length: 255, nullable: true })
+  avatarUrl!: string | null;
 
   @Column({ name: "created_at", type: "timestamp", default: (): string => "CURRENT_TIMESTAMP" })
+  @Exclude()
   createdAt!: Date;
 
   @Column({
@@ -29,8 +32,9 @@ export class User {
     default: (): string => "CURRENT_TIMESTAMP",
     onUpdate: "CURRENT_TIMESTAMP",
   })
+  @Exclude()
   updatedAt!: Date;
 
   @Column({ name: "verified_at", type: "timestamp", nullable: true })
-  verifiedAt?: Date;
+  verifiedAt!: Date | null;
 }

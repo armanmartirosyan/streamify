@@ -1,22 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import { UsersService } from "@/users/users.service";
 import { RegistrationUserDto } from "./dto/registration.user.dto";
 import type { AuthTypes } from "./auth.types";
+import { JwtService } from "@/jwt/jwt.service";
+import { UsersService } from "@/users/users.service";
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
   async registerUser(data: RegistrationUserDto): Promise<AuthTypes.RegisterUserResponse> {
     const user = await this.usersService.createUser(data);
-    return {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      displayName: user.displayName,
-      tokens: {
-        accessToken: "dummy-access-token",
-        refreshToken: "dummy-refresh-token",
-      },
+    const tokens: AuthTypes.Tokens = {
+      accessToken: "dummy-access-token",
+      refreshToken: "dummy-refresh-token",
     };
+
+    return Object.assign(user, tokens);
   }
 }

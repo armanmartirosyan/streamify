@@ -2,12 +2,11 @@ import "dotenv/config";
 import fs from "node:fs";
 import { join } from "node:path";
 import * as grpc from "@grpc/grpc-js";
-import { INestMicroservice, Logger, ValidationError } from "@nestjs/common";
+import { INestMicroservice, Logger, ValidationError, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { RpcException, Transport } from "@nestjs/microservices";
 import { AppModule } from "./app.module";
-import { ProtoValidationPipe } from "./common/pipes/proto-validation/proto-validation.pipe";
 import type { ServerCredentials } from "@grpc/grpc-js";
 
 async function bootstrap(): Promise<void> {
@@ -47,7 +46,6 @@ async function bootstrap(): Promise<void> {
         longs: String, // proto3 int64/uint64 → JS string (avoids precision loss; JS can't safely handle 64-bit ints natively)
         enums: String, // proto3 enums → string name instead of number (e.g. "ACTIVE" not 0)
         defaults: true, // missing fields in response get their default values (0, "", false) instead of undefined
-        oneofs: true, // oneof fields are represented as a single virtual field holding the active field's name
         arrays: true, // ensures repeated fields always come back as arrays even when empty (never undefined)
         objects: true, // ensures message fields always come back as objects even when empty (never undefined/null)
         includeDirs: [join(__dirname, "proto")], // base dirs for resolving imports inside .proto files (e.g. import "common.proto")
@@ -57,13 +55,14 @@ async function bootstrap(): Promise<void> {
   });
 
   app.useGlobalPipes(
-    new ProtoValidationPipe({
+    new ValidationPipe({
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
       exceptionFactory: (errors: ValidationError[]): RpcException => {
         const errorMessages: string[] = errors.map(
-          (err: ValidationError): string => `${err.property} has wrong value (${Object.values(err.constraints || {}).join(", ")})`
+          (err: ValidationError): string =>
+            `${err.property} has wrong value (${Object.values(err.constraints || {}).join(", ")})`,
         );
 
         return new RpcException({
