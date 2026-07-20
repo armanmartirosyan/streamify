@@ -1,11 +1,12 @@
 import "dotenv/config";
-import fs from "node:fs";
-import { join } from "node:path";
+
 import * as grpc from "@grpc/grpc-js";
 import { INestMicroservice, Logger, ValidationError, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { RpcException, Transport } from "@nestjs/microservices";
+import fs from "node:fs";
+import { join } from "node:path";
 import { AppModule } from "./app.module";
 import type { ServerCredentials } from "@grpc/grpc-js";
 

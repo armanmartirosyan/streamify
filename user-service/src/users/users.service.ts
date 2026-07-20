@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
-import { UserAlreadyExistsException } from "./exceptions/user-already-exists.exception";
 import { RegistrationUserDto } from "@/auth/dto/registration.user.dto";
 import { SecurityService } from "@/security/security.service";
+import { User } from "./entities/user.entity";
+import { UserAlreadyExistsException } from "./exceptions/user-already-exists.exception";
 
 @Injectable()
 export class UsersService {
@@ -21,7 +21,7 @@ export class UsersService {
     if (existingUser) {
       const field: string = existingUser.email === data.email ? "email" : "username";
 
-      throw new UserAlreadyExistsException(`User with the same ${field} already exists`);
+      throw new UserAlreadyExistsException(field);
     }
 
     const password: string = await this.securityService.hashPassword(data.password);

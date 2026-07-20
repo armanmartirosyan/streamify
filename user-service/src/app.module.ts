@@ -1,4 +1,4 @@
-import { Module, ClassSerializerInterceptor, Provider, RpcExceptionFilter } from "@nestjs/common";
+import { Module, ClassSerializerInterceptor, Provider } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR, APP_FILTER } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";

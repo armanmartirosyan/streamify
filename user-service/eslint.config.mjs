@@ -47,16 +47,23 @@ export default tseslint.config(
         "error",
         {
           groups: [
-            ["builtin"], // Node.js built-ins
-            ["external"], // npm packages
-            ["internal"], // alias paths (e.g. @/utils)
-            ["parent", "sibling", "index"], // relative imports
-            ["type"], // type-only imports
+            ["builtin", "external"],
+            ["internal"],
+            ["parent", "sibling", "index"],
+            ["type"],
           ],
+          pathGroups: [
+            {
+              pattern: "@/**",
+              group: "internal",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
           alphabetize: {
             order: "asc",
             caseInsensitive: true,
           },
+          "newlines-between": "never",
         },
       ],
       "import/no-unresolved": "off",
