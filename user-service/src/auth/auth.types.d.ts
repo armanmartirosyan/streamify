@@ -10,7 +10,18 @@ export namespace AuthTypes {
     profilePictureUrl?: string;
   };
 
-  type RegisterUserResponse = User & Tokens;
+  type UserDto = {
+    id: number;
+    email: string;
+    username: string;
+    displayName: string | null;
+    avatarUrl: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    verifiedAt: Date | null;
+  }
+
+  type RegisterUserResponse = UserDto & Tokens;
 
   type Tokens = {
     accessToken: string;

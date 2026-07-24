@@ -1,5 +1,6 @@
 function configValidator(config: Record<string, unknown>): Record<string, unknown> {
   const required: string[] = [
+    "SERBICE_NAME",
     "PSQL_URI",
     "PSQL_MIGRATION_URI",
     "GRPC_CA_CERT_PATH",

@@ -4,7 +4,10 @@ import { Repository } from "typeorm";
 import { RegistrationUserDto } from "@/auth/dto/registration.user.dto";
 import { SecurityService } from "@/security/security.service";
 import { User } from "./entities/user.entity";
-import { UserAlreadyExistsException } from "./exceptions/user-already-exists.exception";
+import {
+  UserAlreadyExistsException,
+  PasswordsDoNotMatchException,
+} from "./exceptions/index.exceptions";
 
 @Injectable()
 export class UsersService {
@@ -23,6 +26,8 @@ export class UsersService {
 
       throw new UserAlreadyExistsException(field);
     }
+
+    if (data.password !== data.confirmPassword) throw new PasswordsDoNotMatchException();
 
     const password: string = await this.securityService.hashPassword(data.password);
     const user: User = this.userRepository.create({

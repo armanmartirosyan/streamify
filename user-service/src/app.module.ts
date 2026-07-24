@@ -1,6 +1,6 @@
 import { Module, ClassSerializerInterceptor, Provider } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { APP_INTERCEPTOR, APP_FILTER } from "@nestjs/core";
+import { APP_INTERCEPTOR, APP_FILTER, Reflector } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { globalFilters } from "./common/filters";
@@ -31,7 +31,11 @@ import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
+      useFactory: (reflector: Reflector): ClassSerializerInterceptor => {
+        return new ClassSerializerInterceptor(reflector, {
+          strategy: 'excludeAll',
+        });
+      },
     },
     ...globalFilters.map(
       (filter): Provider => ({
@@ -41,4 +45,4 @@ import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
     ),
   ],
 })
-export class AppModule {}
+export class AppModule { }

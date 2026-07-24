@@ -29,6 +29,7 @@
     "@nestjs/common": "^11.1.27",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.1.27",
+    "@nestjs/jwt": "^11.0.2",
     "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/microservices": "^11.1.27",
     "@nestjs/platform-express": "^11.1.27",
@@ -40,7 +41,8 @@
     "pg": "^8.21.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.30"
+    "typeorm": "^0.3.30",
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -86,8 +88,8 @@
     "testEnvironment": "node"
   },
   "allowScripts": {
-    "protobufjs@7.6.4": true,
     "bcrypt@6.0.0": true,
-    "unrs-resolver@1.12.2": true
+    "unrs-resolver@1.12.2": true,
+    "protobufjs@7.6.5": true
   }
 }

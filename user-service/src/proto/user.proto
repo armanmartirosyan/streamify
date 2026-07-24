@@ -13,22 +13,18 @@ service AuthService {
 message NoParam {}
 
 message CreateUserRequest {
-  string          email             = 1;
-  string          username          = 2;
-  string          password          = 3;
-  string          confirmPassword   = 4;
-  optional string displayName       = 5;
+  string          email           = 1;
+  string          username        = 2;
+  string          password        = 3;
+  string          confirmPassword = 4;
+  optional string displayName     = 5;
 }
 
 message CreateUserResponse {
-  int32           id                = 1;
-  string          email             = 2;
-  string          username          = 3;
-  optional string displayName       = 4;
-  Tokens          tokens            = 5;
-}
-
-message Tokens {
-  string accessToken  = 1;
-  string refreshToken = 2;
+  int32           id           = 1;
+  string          email        = 2;
+  string          username     = 3;
+  optional string displayName  = 4;
+  string          accessToken  = 5;
+  string          refreshToken = 6;
 }
