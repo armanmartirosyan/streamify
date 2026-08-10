@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import { RegistrationUserDto } from "@/auth/dto/registration.user.dto";
 import { SecurityService } from "@/security/security.service";
 import { User } from "./entities/user.entity";
@@ -8,6 +7,7 @@ import {
   UserAlreadyExistsException,
   PasswordsDoNotMatchException,
 } from "./exceptions/index.exceptions";
+import type { Repository } from "typeorm";
 
 @Injectable()
 export class UsersService {

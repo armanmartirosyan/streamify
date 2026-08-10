@@ -2,17 +2,13 @@ syntax = "proto3";
 
 package user;
 
-service UserService {
-  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
-}
-
 service AuthService {
-  rpc RegisterUser (CreateUserRequest) returns (CreateUserResponse);
+  rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
 }
 
 message NoParam {}
 
-message CreateUserRequest {
+message RegisterUserRequest {
   string          email           = 1;
   string          username        = 2;
   string          password        = 3;
@@ -20,7 +16,7 @@ message CreateUserRequest {
   optional string displayName     = 5;
 }
 
-message CreateUserResponse {
+message RegisterUserResponse {
   int32           id           = 1;
   string          email        = 2;
   string          username     = 3;

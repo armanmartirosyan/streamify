@@ -31,9 +31,10 @@ import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
   providers: [
     {
       provide: APP_INTERCEPTOR,
+      inject: [Reflector],
       useFactory: (reflector: Reflector): ClassSerializerInterceptor => {
         return new ClassSerializerInterceptor(reflector, {
-          strategy: 'excludeAll',
+          strategy: "excludeAll",
         });
       },
     },
@@ -45,4 +46,4 @@ import type { RedisModuleTypes as RMT } from "./redis/redis.d.ts";
     ),
   ],
 })
-export class AppModule { }
+export class AppModule {}
