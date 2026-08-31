@@ -2,10 +2,11 @@ import { Logger } from "@nestjs/common";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@/jwt/jwt.service";
 import { UserRolesService } from "@/user_roles/user_roles.service";
-import type { User } from "@/users/entities/user.entity";
 import { UsersService } from "@/users/users.service";
 import { RegistrationUserDto } from "./dto/registration.user.dto";
 import { RegistrationUserResponseDto } from "./dto/registration.user.response.dto";
+import { USER_ROLES } from "@/user_roles/user_roles.constant";
+import type { User } from "@/users/entities/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 
   async registerUser(data: RegistrationUserDto): Promise<RegistrationUserResponseDto> {
     const user: User = await this.usersService.createUser(data);
-    // const userRole = await this.userRoleService.createUserRole(user, "user");
+    // const userRole = await this.userRoleService.assignRole(user, USER_ROLES.USER);
     // const tokens = await this.jwtService.generateTokens(user);
 
     return new RegistrationUserResponseDto({

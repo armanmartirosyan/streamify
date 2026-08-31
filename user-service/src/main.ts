@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import * as grpc from "@grpc/grpc-js";
-import { INestMicroservice, Logger, ValidationError, ValidationPipe } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { RpcException, Transport } from "@nestjs/microservices";
@@ -9,6 +9,7 @@ import fs from "node:fs";
 import { join } from "node:path";
 import { AppModule } from "./app.module";
 import type { ServerCredentials } from "@grpc/grpc-js";
+import type { INestMicroservice, ValidationError } from "@nestjs/common";
 
 async function bootstrap(): Promise<void> {
   const logger: Logger = new Logger("Main");

@@ -1,5 +1,6 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { JwtService } from "./jwt.service";
+import type { TestingModule } from "@nestjs/testing";
 
 describe("JwtService", () => {
   let service: JwtService;

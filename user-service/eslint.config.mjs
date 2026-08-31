@@ -41,6 +41,10 @@ export default tseslint.config(
           "caughtErrorsIgnorePattern": "^_"
         }
       ],
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { "fixStyle": "separate-type-imports" }
+      ],
       "prettier/prettier": ["error", { endOfLine: "auto" }],
 
       "import/order": [
